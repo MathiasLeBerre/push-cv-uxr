@@ -1,15 +1,16 @@
 // src/api.js
-// Toutes les appels API passent par ici → proxy Netlify Function
+// Appel direct vers l'API Anthropic depuis le navigateur.
+// La clé est passée en header — même niveau de sécurité que sessionStorage.
 
 export async function callClaude(body, apiKey) {
-  const headers = { 'Content-Type': 'application/json' };
-  // Si une clé est fournie (saisie au démarrage), on l'envoie dans le header custom
-  // La Netlify Function s'en servira seulement si ANTHROPIC_API_KEY n'est pas définie côté serveur
-  if (apiKey) headers['x-api-key'] = apiKey;
-
-  const response = await fetch('/api/claude', {
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
-    headers,
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-beta': 'prompt-caching-2024-07-31',
+    },
     body: JSON.stringify(body),
   });
 
