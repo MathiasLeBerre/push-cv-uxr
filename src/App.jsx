@@ -27,7 +27,7 @@ export default function App() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-api-key': key },
         body: JSON.stringify({
-          model: 'claude-haiku-4-5-20251001',
+          model: 'claude-haiku-4-5',
           max_tokens: 10,
           messages: [{ role: 'user', content: 'ok' }],
         }),
