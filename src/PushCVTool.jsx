@@ -1970,5 +1970,3 @@ function HistoryEntry({ entry, onClick }) {
     </div>
   );
 }
-  );
-}
