@@ -585,9 +585,7 @@ export default function PushCVTool({ apiKey }) {
   const [editingPhotoUrl, setEditingPhotoUrl] = useState(null);
   const [tempPhotoUrl, setTempPhotoUrl] = useState('');
 
-  const [driveStatus] = useState('ok');
-  const [driveLastSync] = useState(null);
-  const driveSaveTimer = React.useRef(null);
+
 
   const [reverseConsultant, setReverseConsultant] = useState(null);
   const [reverseLoading, setReverseLoading] = useState(false);
@@ -679,7 +677,7 @@ export default function PushCVTool({ apiKey }) {
     } else if (baseSuivi.length > 0) {
       setSuivi(baseSuivi);
     }
-    setDriveStatus('ok');
+    // localStorage chargé
   }, []);
 
   const saveConsultants = (next) => {
@@ -980,12 +978,8 @@ Génère le JSON de résultat pour ce contact.`;
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div className="sans" style={{ fontSize: 11, letterSpacing: '0.15em', color: '#8B7E64', textTransform: 'uppercase', fontWeight: 500 }}>UX-Republic · Outil interne</div>
-              <div className="sans" style={{ fontSize: 11, display: 'flex', alignItems: 'center', gap: 5, padding: '3px 10px', borderRadius: 999, background: driveStatus === 'ok' ? '#E8F0E2' : driveStatus === 'loading' ? '#F4F1E8' : driveStatus === 'saving' ? '#FFF8EC' : driveStatus === 'error' ? '#FEF2E8' : '#F4F1E8', color: driveStatus === 'ok' ? '#4A6440' : driveStatus === 'error' ? '#9A4A1B' : '#8B7E64' }}>
-                {driveStatus === 'loading' && <><Loader2 size={10} className="spin" /> Chargement Drive…</>}
-                {driveStatus === 'saving' && <><Loader2 size={10} className="spin" /> Sauvegarde…</>}
-                {driveStatus === 'ok' && <>● Drive sync{driveLastSync ? ` · ${driveLastSync.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}` : ''}</>}
-                {driveStatus === 'error' && <>⚠ Drive indisponible</>}
-                {driveStatus === 'idle' && <>○ Drive</>}
+              <div className="sans" style={{ fontSize: 11, display: 'flex', alignItems: 'center', gap: 5, padding: '3px 10px', borderRadius: 999, background: '#E8F0E2', color: '#4A6440' }}>
+                ● Sauvegarde locale active
               </div>
             </div>
             <h1 className="serif" style={{ fontSize: 32, margin: '4px 0 0 0', color: '#1A1A1A', fontWeight: 400, letterSpacing: '-0.02em' }}>
@@ -1974,5 +1968,7 @@ function HistoryEntry({ entry, onClick }) {
         </div>
       </div>
     </div>
+  );
+}
   );
 }
