@@ -22,14 +22,10 @@ export default function App() {
     setChecking(true);
     setError('');
     try {
-      // Vérifie la clé avec un appel minimal directement vers Anthropic
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
+      // Vérifie la clé avec un appel minimal
+      const res = await fetch('/api/claude', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': key,
-          'anthropic-version': '2023-06-01',
-        },
+        headers: { 'Content-Type': 'application/json', 'x-api-key': key },
         body: JSON.stringify({
           model: 'claude-haiku-4-5',
           max_tokens: 10,
