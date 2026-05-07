@@ -873,7 +873,7 @@ Génère le JSON de résultat pour ce contact.`;
         const messages = buildCachedMessages(contact, availableConsultants, []);
         for (let attempt = 0; attempt < 3; attempt++) {
           if (attempt > 0) await new Promise(r => setTimeout(r, attempt * 5000));
-          const response = await callClaude({ model: 'claude-sonnet-4-6', max_tokens: 3000, messages }, apiKey);
+          const response = await callClaude({ model: 'claude-sonnet-4-6', max_tokens: 1500, messages }, apiKey);
           const data = response;
           const text = data.content.filter(b => b.type === 'text').map(b => b.text).join('').replace(/```json|```/g, '').trim();
           const parsed = JSON.parse(text);
