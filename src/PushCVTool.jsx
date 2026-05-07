@@ -822,8 +822,7 @@ Champs requis :
 - selectedAngle : "problematique_metier" | "presentation_profils" | "factuel_dispo"
 - angleReason : string (1 phrase)
 - selectionStrategy : string (1-2 phrases)
-- allScores : array of { consultantId, consultantName, status, score (int), shortReason, selected (bool) }
-- matches : array of { consultantId, consultantName, status, matchScore (int), whyThisMatch (3-5 phrases), topStrengths (array of 3-4 strings) }
+- matches : array of { consultantId, consultantName, status, matchScore (int), whyThisMatch (2-3 phrases max), topStrengths (array of 3 strings max) }
 - email : { subject, body } — body avec \\n pour les sauts de ligne`;
 
     // Partie DYNAMIQUE — spécifique à chaque contact (non cachée)
@@ -873,7 +872,7 @@ Génère le JSON de résultat pour ce contact.`;
         const messages = buildCachedMessages(contact, availableConsultants, []);
         for (let attempt = 0; attempt < 3; attempt++) {
           if (attempt > 0) await new Promise(r => setTimeout(r, attempt * 5000));
-          const response = await callClaude({ model: 'claude-sonnet-4-6', max_tokens: 1500, messages }, apiKey);
+          const response = await callClaude({ model: 'claude-sonnet-4-6', max_tokens: 2500, messages }, apiKey);
           const data = response;
           const text = data.content.filter(b => b.type === 'text').map(b => b.text).join('').replace(/```json|```/g, '').trim();
           const parsed = JSON.parse(text);
@@ -917,7 +916,7 @@ Génère le JSON de résultat pour ce contact.`;
     setError(null);
     const prompt = `Voici le CV d'un consultant UX-Republic. Extrais les informations structurées au format JSON exact suivant. Réponds UNIQUEMENT en JSON valide, sans backticks.\n\nCV :\n${newConsultantText}\n\nNom du consultant : ${newConsultantName}\n\nFormat attendu :\n{\n  "id": "prenom-en-minuscules-sans-accents",\n  "name": "Prénom Nom",\n  "role": "Titre exact du poste",\n  "available": true,\n  "experience": "X ans",\n  "sectors": [],\n  "sectorsStrong": [],\n  "domains": [],\n  "languages": [],\n  "expertises": [],\n  "keyClients": [],\n  "highlights": [],\n  "methodology": "",\n  "bookUrl": ""\n}`;
     try {
-      const data = await callClaude({ model: 'claude-sonnet-4-6', max_tokens: 1500, messages: [{ role: 'user', content: prompt }] }, apiKey);
+      const data = await callClaude({ model: 'claude-sonnet-4-6', max_tokens: 2500, messages: [{ role: 'user', content: prompt }] }, apiKey);
       const text = data.content.filter(b => b.type === 'text').map(b => b.text).join('').replace(/```json|```/g, '').trim();
       const parsed = JSON.parse(text);
       if (consultants.find(c => c.id === parsed.id)) parsed.id = parsed.id + '-' + Date.now();
