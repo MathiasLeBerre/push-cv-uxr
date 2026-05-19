@@ -1359,24 +1359,25 @@ function SuiviView({ suivi, consultants, saveSuivi, photos, apiKey }) {
     const consultantsEnvoyes = (s.consultants || []).map(c => c.name).join(', ');
     const prompt = `Tu es Mathias, Business Manager chez UX-Republic, une agence de conseil spécialisée en UX/Product Design basée à Paris.
 
-Tu dois écrire un email de relance court et professionnel pour faire suite à l'envoi de CV il y a ${joursEcoules} jours.
+Tu dois rédiger un email de relance professionnel suite à l'envoi de CV il y a ${joursEcoules} jours, sans réponse à ce jour.
 
 Contexte :
 - Entreprise prospectée : ${s.company}
-- Contact : ${s.contact?.name || 'non précisé'}, ${s.contact?.role || ''}
-- Email contact : ${s.contact?.email || ''}
+- Contact : ${s.contact?.name || 'Madame/Monsieur'}, ${s.contact?.role || ''}
 - Consultant(s) envoyé(s) : ${consultantsEnvoyes}
 - Délai sans réponse : ${joursEcoules} jours
 
-Règles :
-- Ton naturel, direct, sans être insistant
-- 4-6 lignes maximum
-- Ne pas répéter le CV en détail, juste rappeler le profil
-- Ouvrir la porte à un retour même négatif
-- Terminer exactement par "Excellente journée,\nMathias"
-- PAS de formule pompeuse type "J'espère que ce message vous trouve bien"
+Règles impératives :
+- TOUJOURS vouvoyer le destinataire, sans exception
+- Ton sobre, professionnel, jamais familier — pas de "on", pas de "nous" informel, pas de tournures orales
+- 4 à 6 lignes maximum, pas de liste à puces
+- Ne pas détailler les profils, juste les mentionner
+- Ouvrir la porte à un retour même négatif, sans insistance
+- PAS de formule d'accroche creuse ("J'espère que vous allez bien", "Je me permets de...")
+- Commencer directement par le contexte de la relance
+- Terminer EXACTEMENT par : "Excellente journée,\\nMathias"
 
-Réponds UNIQUEMENT avec un JSON : { "subject": "...", "body": "..." }`;
+Réponds UNIQUEMENT avec un JSON strict, sans markdown : { "subject": "...", "body": "..." }`;
 
     try {
       const data = await callClaude({ model: 'claude-haiku-4-5', max_tokens: 600, messages: [{ role: 'user', content: prompt }] }, apiKey);
