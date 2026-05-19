@@ -1363,18 +1363,18 @@ Tu dois rédiger un email de relance professionnel suite à l'envoi de CV il y a
 
 Contexte :
 - Entreprise prospectée : ${s.company}
-- Contact : ${s.contact?.name || 'Madame/Monsieur'}, ${s.contact?.role || ''}
+- Contact : ${s.contact?.name?.split(' ')[0] || 'Madame/Monsieur'}, ${s.contact?.role || ''}
 - Consultant(s) envoyé(s) : ${consultantsEnvoyes}
 - Délai sans réponse : ${joursEcoules} jours
 
 Règles impératives :
 - TOUJOURS vouvoyer le destinataire, sans exception
-- Ton sobre, professionnel, jamais familier — pas de "on", pas de "nous" informel, pas de tournures orales
+- Ton sobre, professionnel, direct — jamais familier, jamais défensif
 - 4 à 6 lignes maximum, pas de liste à puces
 - Ne pas détailler les profils, juste les mentionner
-- Ouvrir la porte à un retour même négatif, sans insistance
-- PAS de formule d'accroche creuse ("J'espère que vous allez bien", "Je me permets de...")
-- Commencer directement par le contexte de la relance
+- Si tu ouvres la porte à un retour négatif, formule-le simplement : "même si le timing ne s'y prête pas" ou "même si le besoin a évolué" — pas de justification ou d'excuse sur la qualité de la proposition
+- PAS de formules du type : "Je me permets de...", "J'espère que vous allez bien", "pour affiner nos futures propositions", "si notre approche ne correspond pas"
+- Commencer TOUJOURS par "Bonjour [prénom]," sur la première ligne, puis sauter une ligne avant le corps
 - Terminer EXACTEMENT par : "Excellente journée,\\nMathias"
 
 Réponds UNIQUEMENT avec un JSON strict, sans markdown : { "subject": "...", "body": "..." }`;
