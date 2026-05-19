@@ -1248,7 +1248,7 @@ Génère le JSON de résultat pour ce contact.`;
         )}
 
         {view === 'suivi' && (
-          <SuiviView suivi={suivi} consultants={consultants} saveSuivi={saveSuivi} photos={photos} />
+          <SuiviView suivi={suivi} consultants={consultants} saveSuivi={saveSuivi} photos={photos} apiKey={apiKey} />
         )}
       </main>
 
@@ -1336,7 +1336,7 @@ const STATUTS = [
   { id: 'place', label: 'Placé · Mission démarrée', color: '#4A6440', bg: '#E8F0E2', emoji: '✅' },
 ];
 
-function SuiviView({ suivi, consultants, saveSuivi, photos }) {
+function SuiviView({ suivi, consultants, saveSuivi, photos, apiKey }) {
   const [viewMode, setViewMode] = useState('envois'); // 'envois' | 'consultants'
   const [editingId, setEditingId] = useState(null);
   const [editStatut, setEditStatut] = useState('');
@@ -1379,7 +1379,7 @@ Règles :
 Réponds UNIQUEMENT avec un JSON : { "subject": "...", "body": "..." }`;
 
     try {
-      const data = await callClaude({ model: 'claude-haiku-4-5', max_tokens: 600, messages: [{ role: 'user', content: prompt }] });
+      const data = await callClaude({ model: 'claude-haiku-4-5', max_tokens: 600, messages: [{ role: 'user', content: prompt }] }, apiKey);
       const text = data.content?.map(b => b.text || '').join('') || '';
       const clean = text.replace(/```json|```/g, '').trim();
       const parsed = JSON.parse(clean);
