@@ -1568,8 +1568,8 @@ Réponds UNIQUEMENT avec un JSON : { "subject": "...", "body": "..." }`;
                                     {relanceCopied ? <><Check size={12} /> Copié !</> : <><Copy size={12} /> Copier</>}
                                   </button>
                                   {s.contact?.email && (
-                                    <a href={`mailto:${s.contact.email}?subject=${encodeURIComponent(relanceSubject)}&body=${encodeURIComponent(relanceEmail)}`} className="sans" style={{ flex: 1, padding: '9px', background: '#1A1A1A', color: '#FAF8F4', borderRadius: 999, fontSize: 12, fontWeight: 500, textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                                      <Mail size={12} /> Ouvrir dans Mail
+                                    <a href={`https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(s.contact.email)}&su=${encodeURIComponent(relanceSubject)}&body=${encodeURIComponent(relanceEmail)}`} target="_blank" rel="noopener noreferrer" className="sans" style={{ flex: 1, padding: '9px', background: '#1A1A1A', color: '#FAF8F4', borderRadius: 999, fontSize: 12, fontWeight: 500, textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                                      <Mail size={12} /> Ouvrir dans Gmail
                                     </a>
                                   )}
                                   <button onClick={() => generateRelance(s)} className="sans" style={{ padding: '9px 14px', background: 'transparent', border: '1px solid #E8E2D5', borderRadius: 999, cursor: 'pointer', fontSize: 12, color: '#8B7E64' }}>↺</button>
