@@ -1357,25 +1357,35 @@ function SuiviView({ suivi, consultants, saveSuivi, photos, apiKey }) {
     setRelanceLoading(true);
     const joursEcoules = Math.floor((Date.now() - new Date(s.createdAt)) / 86400000);
     const consultantsEnvoyes = (s.consultants || []).map(c => c.name).join(', ');
-    const prompt = `Tu es Mathias, Business Manager chez UX-Republic, une agence de conseil spécialisée en UX/Product Design basée à Paris.
+    const prompt = `Tu es Mathias, Business Manager chez UX-Republic.
 
-Tu dois rédiger un email de relance professionnel suite à l'envoi de CV il y a ${joursEcoules} jours, sans réponse à ce jour.
+Rédige un email de relance court et professionnel, suite à l'envoi de profils il y a ${joursEcoules} jours sans retour.
 
 Contexte :
-- Entreprise prospectée : ${s.company}
-- Contact : ${s.contact?.name?.split(' ')[0] || 'Madame/Monsieur'}, ${s.contact?.role || ''}
-- Consultant(s) envoyé(s) : ${consultantsEnvoyes}
-- Délai sans réponse : ${joursEcoules} jours
+- Entreprise : ${s.company}
+- Prénom du contact : ${s.contact?.name?.split(' ')[0] || ''}
+- Poste : ${s.contact?.role || ''}
+- Profils envoyés : ${consultantsEnvoyes}
 
-Règles impératives :
-- TOUJOURS vouvoyer le destinataire, sans exception
-- Ton sobre, professionnel, direct — jamais familier, jamais défensif
-- 4 à 6 lignes maximum, pas de liste à puces
-- Ne pas détailler les profils, juste les mentionner
-- Si tu ouvres la porte à un retour négatif, formule-le simplement : "même si le timing ne s'y prête pas" ou "même si le besoin a évolué" — pas de justification ou d'excuse sur la qualité de la proposition
-- PAS de formules du type : "Je me permets de...", "J'espère que vous allez bien", "pour affiner nos futures propositions", "si notre approche ne correspond pas"
-- Commencer TOUJOURS par "Bonjour [prénom]," sur la première ligne, puis sauter une ligne avant le corps
-- Terminer EXACTEMENT par : "Excellente journée,\\nMathias"
+Exemple du ton et de la forme attendus :
+---
+Bonjour Isabelle,
+
+Suite à l'envoi des profils de [noms] il y a quelques semaines, je reviens vers vous pour savoir si vous avez pu en prendre connaissance.
+
+Avez-vous eu l'occasion d'y jeter un œil ? Un retour de votre part, même bref, serait le bienvenu.
+
+Excellente journée,
+Mathias
+---
+
+Règles strictes :
+- Commencer par "Bonjour [prénom],"
+- 3 phrases maximum dans le corps, pas une de plus
+- Zéro argument de vente, zéro mention d'UX-Republic, zéro description des profils
+- Pas de "nous serions ravis", "explorer une collaboration", "accompagner [entreprise]", "n'hésitez pas"
+- Vouvoiement strict
+- Terminer EXACTEMENT par "Excellente journée,\\nMathias"
 
 Réponds UNIQUEMENT avec un JSON strict, sans markdown : { "subject": "...", "body": "..." }`;
 
